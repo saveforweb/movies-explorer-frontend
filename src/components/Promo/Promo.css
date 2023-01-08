@@ -1,0 +1,27 @@
+.promo {
+  background-color: var(
+    --color-second-bg
+  );
+  border-radius: 10px;
+  display: grid;
+  grid-template-rows: auto 36px;
+  justify-content: center;
+  align-items: center;
+  min-height: 493px;
+  margin-top: 20px;
+  padding: 30px;
+  box-sizing: border-box;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.promo__header {
+    font-family: var(--font-family-default);
+    font-weight: var(--font-weight-regular);
+    font-size: 50px;
+    line-height: 58px;
+    color: var(--color-white);
+    max-width: 730px;
+    text-align: center;
+    margin: 0;
+}

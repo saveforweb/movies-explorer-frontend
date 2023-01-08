@@ -1,0 +1,14 @@
+:root {
+    --color-main-bg: #202020;
+    --color-second-bg: #272727;
+    --color-third-bg: #303030;
+    --color-white: #FFF;
+    --color-black: #000;
+    --color-green: #3DDC84;
+    --color-gray: #8B8B8B;
+    --color-gray-hr: #424242;
+    --color-hr: #DADADA;
+    --font-family-default: 'Inter', sans-serif;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+}

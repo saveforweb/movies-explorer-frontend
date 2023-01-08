@@ -1,0 +1,82 @@
+.about-me {
+  padding: 110px 30px 105px
+    30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.about-me__profile {
+  display: flex;
+  justify-content: space-between;
+  padding: 66px 0 101px 0;
+}
+
+.about-me__profile-description {
+  max-width: 600px;
+  position: relative;
+}
+
+.about-me__profile-description-title {
+  font-family: var(
+    --font-family-default
+  );
+  font-weight: var(
+    --font-weight-regular
+  );
+  font-size: 50px;
+  line-height: 58px;
+  letter-spacing: -0.04em;
+  color: var(--color-white);
+  margin: 0;
+  margin-bottom: 18px;
+}
+
+.about-me__profile-description-subtitle {
+  font-family: var(
+    --font-family-default
+  );
+  font-weight: var(
+    --font-weight-medium
+  );
+  font-size: 18px;
+  line-height: 20px;
+  letter-spacing: -0.04em;
+  color: var(--color-white);
+  margin: 0;
+  margin-bottom: 26px;
+}
+
+.about-me__profile-description-text {
+  font-family: var(
+    --font-family-default
+  );
+  font-weight: var(
+    --font-weight-regular
+  );
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--color-white);
+  margin: 0;
+}
+
+.about-me__profile-description-link {
+  font-family: var(
+    --font-family-default
+  );
+  font-weight: var(
+    --font-weight-medium
+  );
+  font-size: 14px;
+  line-height: 17px;
+  color: var(--color-white);
+  margin: 0;
+  text-decoration: none;
+  position: absolute;
+  bottom: 0px;
+}
+
+.about-me__profile-image-photo {
+  display: block;
+  border-radius: 10px;
+}
