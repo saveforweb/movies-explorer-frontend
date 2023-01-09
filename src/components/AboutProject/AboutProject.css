@@ -10,7 +10,7 @@
   padding: 0;
   margin: 0;
   display: flex;
-  gap: 40px;
+  gap: 50px;
   padding-top: 70px;
 }
 
@@ -75,10 +75,69 @@
     --font-weight-regular
   );
   color: var(--color-black);
-  background-color: var(--color-green);
+  background-color: var(
+    --color-green
+  );
 }
 
 .about-project__progress-item_gray-bg {
-    color: var(--color-white);
-    background-color: var(--color-third-bg);    
+  color: var(--color-white);
+  background-color: var(
+    --color-third-bg
+  );
+}
+
+@media screen and (max-width: 768px) {
+  .about-project {
+    padding: 90px 50px;
+    max-width: 768px;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
+  .about-project__list-item-text {
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .about-project__progress {
+    padding-top: 93px;
+    grid-template-columns: 140px auto;
+  }
+
+  .about-project__list-item-title {
+    line-height: 22px;
+  }
+
+  .about-project__list {
+    gap: 40px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .about-project__list {
+    flex-direction: column;
+  }
+
+  .about-project {
+    padding: 70px 18px;
+  }
+
+  .about-project__list-item-title {
+    font-size: 18px;
+  }
+
+  .about-project__list {
+    padding-top: 60px;
+    gap: 56px;
+  }
+
+  .about-project__list-item-text {
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  .about-project__list-item {
+    gap: 16px;
+  }
 }

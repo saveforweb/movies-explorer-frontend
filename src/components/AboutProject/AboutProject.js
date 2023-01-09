@@ -9,7 +9,7 @@ function AboutProject() {
                     <h3 className="about-project__list-item-title">Дипломный проект включал 5 этапов</h3>
                     <p className="about-project__list-item-text">Составление плана, работу над бэкендом, вёрстку, добавление функциональности и финальные доработки.</p>
                 </li>
-                <li className="about-project__list-item-item">
+                <li className="about-project__list-item">
                     <h3 className="about-project__list-item-title">На выполнение диплома ушло 5 недель</h3>
                     <p className="about-project__list-item-text">У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы успешно защититься.</p>
                 </li>
