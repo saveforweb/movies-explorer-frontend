@@ -69,3 +69,21 @@
     font-size: 28px;
   }
 }
+
+@media screen and (max-width: 767px) {
+  .portfolio__title {
+    font-size: 14px;
+    line-height: 20px;
+    margin: 0 0 20px 0;
+  }
+
+  .portfolio__list-item-link {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .portfolio__list-item-link::after {
+    font-size: 18px;
+    line-height: 28px;
+  }
+}

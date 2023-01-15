@@ -1,19 +1,35 @@
+import React from "react";
+import { Route, Routes, Navigate } from 'react-router-dom';
 import Header from '../Header/Header';
-import Promo from '../Promo/Promo';
-import AboutProject from '../AboutProject/AboutProject';
-import Techs from '../Techs/Techs';
-import AboutMe from '../AboutMe/AboutMe';
+import Main from '../Main/Main';
+import Movies from "../Movies/Movies";
 import Footer from '../Footer/Footer';
 
 function App() {
+  const [loggedIn, setLoggedIn] = React.useState(true);
+
   return (
     <div className='page'>
-      <Header />
-      <Promo />
-      <AboutProject />
-      <Techs />
-      <AboutMe />
-      <Footer />
+      <Routes>
+        <Route path="/" element={
+          <>
+            <Header />
+            <Main />
+            <Footer />
+          </>
+        } />
+        <Route path="/movies" element={
+          <>
+            <Header loggedIn={loggedIn} />
+            <Movies />
+            <Footer />
+          </>
+        } />
+        <Route
+          path="*"
+          element={<Navigate to="/signin" />}
+        />
+      </Routes>
     </div>
   );
 }

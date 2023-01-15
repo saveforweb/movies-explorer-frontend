@@ -15,7 +15,7 @@
     var(--color-hr);
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 767px) {
   .section-header {
     font-size: 18px;
     line-height: 22px;

@@ -1,0 +1,150 @@
+.search-form {
+  padding: 60px 30px 80px 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.search-form__form-block {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.search-form__input {
+  height: 48px;
+  width: 100%;
+  border: 0;
+  border-radius: 4px;
+  background-color: var(
+    --color-gray-input
+  );
+  padding: 15px 22px;
+  box-sizing: border-box;
+  font-family: var(
+    --font-family-default
+  );
+  font-weight: var(
+    --font-weight-regular
+  );
+  font-size: 14px;
+  line-height: 18px;
+  outline: 0;
+  color: var(--color-white);
+}
+
+.search-form__input::placeholder {
+  color: var(--color-gray);
+}
+
+.search-form__button-search {
+  height: 44px;
+  background-color: var(
+    --color-blue
+  );
+  border-radius: 3px;
+  font-size: 12px;
+  line-height: 18px;
+  font-family: var(
+    --font-family-default
+  );
+  font-weight: var(
+    --font-weight-medium
+  );
+  color: var(--color-white);
+  border: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding: 0 5px;
+  margin: 0;
+  cursor: pointer;
+  display: block;
+}
+
+.search-form__button-search-text {
+  width: 60px;
+  display: block;
+}
+
+.search-form__filter-block {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  margin: 30px 0 0 0;
+  border-bottom: 1px solid var(--color-gray-hr);
+  padding-bottom: 39px;
+}
+
+.search-form__toggle-button {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+  margin: 0;
+  vertical-align: top;
+  background-color: var(--color-gray-toggle);
+  border: 0;
+  border-radius: 20px;
+  outline: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  transition: all 0.3s
+    cubic-bezier(
+      0.2,
+      0.85,
+      0.32,
+      1.2
+    );
+}
+
+.search-form__toggle-button::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-light-gray);
+  border-radius: 50%;
+  transform: translateX(0);
+  transition: all 0.3s
+    cubic-bezier(
+      0.2,
+      0.85,
+      0.32,
+      1.2
+    );
+}
+
+.search-form__toggle-button:checked::after {
+  transform: translateX(
+    16px
+  );
+  background-color: var(
+    --color-white
+  );
+}
+
+.search-form__toggle-button:checked {
+    background: var(
+    --color-green
+  );
+}
+
+.search-form__toggle-label {
+  font-family: var(
+    --font-family-default
+  );
+  font-weight: var(
+    --font-weight-regular
+  );
+  color: var(--color-white);
+  font-size: 12px;
+  line-height: 18px;
+  cursor: pointer;
+}

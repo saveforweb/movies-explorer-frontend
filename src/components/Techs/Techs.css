@@ -110,8 +110,29 @@
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 767px) {
   .techs__list {
     flex-wrap: wrap;
+    padding: 50px 53px 0 53px;
+    justify-content: flex-start;
+  }
+
+  .techs__container {
+    padding: 70px 18px;
+  }
+
+  .techs__title {
+    font-size: 30px;
+    line-height: 36px;
+  }
+
+  .techs__about {
+    padding-top: 60px;
+    gap: 24px;
+  }
+
+  .techs__text {
+    font-size: 11px;
+    line-height: 16px;
   }
 }

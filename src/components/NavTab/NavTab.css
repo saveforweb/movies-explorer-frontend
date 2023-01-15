@@ -33,7 +33,7 @@
   text-decoration: none;
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 767px) {
   .navtab {
     min-height: 26px;
   }
