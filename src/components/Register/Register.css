@@ -1,0 +1,25 @@
+.registration {
+  margin: 0 auto;
+  max-width: 396px;
+  padding: 70px 0 70px 0;
+  box-sizing: border-box;
+}
+
+.registration__form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.registration__title {
+  font-family: var(
+    --font-family-default
+  );
+  font-weight: var(
+    --font-weight-regular
+  );
+  font-size: 24px;
+  line-height: 29px;
+  color: var(--color-white);
+  margin: 0;
+}

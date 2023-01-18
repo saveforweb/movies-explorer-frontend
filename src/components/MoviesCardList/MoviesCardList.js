@@ -1,26 +1,27 @@
 import MoviesCard from "../MoviesCard/MoviesCard";
 
-function MoviesCardList() {
+function MoviesCardList(props) {
+    const { isSavedCard } = props;
     return (
         <>
             <section className="movies">
                 <ul className="movies__list">
-                    <MoviesCard />
-                    <MoviesCard />
-                    <MoviesCard />
-                    <MoviesCard />
-                    <MoviesCard />
-                    <MoviesCard />
-                    <MoviesCard />
-                    <MoviesCard />
-                    <MoviesCard />
-                    <MoviesCard />
-                    <MoviesCard />
-                    <MoviesCard />
-                    <MoviesCard />
-                    <MoviesCard />
-                    <MoviesCard />
-                    <MoviesCard />
+                    <MoviesCard isSavedCard={isSavedCard} />
+                    <MoviesCard isSavedCard={isSavedCard} />
+                    <MoviesCard isSavedCard={isSavedCard} />
+                    <MoviesCard isSavedCard={isSavedCard} />
+                    <MoviesCard isSavedCard={isSavedCard} />
+                    <MoviesCard isSavedCard={isSavedCard} />
+                    <MoviesCard isSavedCard={isSavedCard} />
+                    <MoviesCard isSavedCard={isSavedCard} />
+                    <MoviesCard isSavedCard={isSavedCard} />
+                    <MoviesCard isSavedCard={isSavedCard} />
+                    <MoviesCard isSavedCard={isSavedCard} />
+                    <MoviesCard isSavedCard={isSavedCard} />
+                    <MoviesCard isSavedCard={isSavedCard} />
+                    <MoviesCard isSavedCard={isSavedCard} />
+                    <MoviesCard isSavedCard={isSavedCard} />
+                    <MoviesCard isSavedCard={isSavedCard} />
                 </ul>
                 <button className="movies__see-more-button">Ещё</button>
             </section>
