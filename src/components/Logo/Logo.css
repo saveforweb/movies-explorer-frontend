@@ -1,3 +1,4 @@
 .logo {
-  display: flex ;
+  display: inline-block;
+  height: 38px;
 }

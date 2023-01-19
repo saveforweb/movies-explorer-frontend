@@ -7,7 +7,8 @@ function InputText(props) {
         <span>
             <label htmlFor={id} className="input__label">{labelText}</label>
             <input id={id} className={inputClassName} type={inputType} minLength={minLengthValue} maxLength={maxLengthValue} required={isRequired} />
-            <span className="input__error">{errorMessage}</span>
+            {errorMessage && <span className="input__error">{errorMessage}</span>}
+            
         </span>
     )
 }

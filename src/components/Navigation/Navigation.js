@@ -60,7 +60,7 @@ function Navigation(props) {
                             <a href='/signup' className='navigation__link'>Регистрация</a>
                         </li>
                         <li className='navigation__link-block-list-item'>
-                            <a href='/' className='navigation__link-button'>Войти</a>
+                            <a href='/signin' className='navigation__link-button'>Войти</a>
                         </li>
                     </ul>
                 </nav>

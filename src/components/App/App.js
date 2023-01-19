@@ -7,6 +7,8 @@ import Footer from '../Footer/Footer';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
+import Login from '../Login/Login';
+import NotFoundPage from '../NotFoundPage/NotFoundPage';
 
 function App() {
   const [loggedIn, setLoggedIn] = React.useState(true);
@@ -46,9 +48,19 @@ function App() {
             <Register />
           </>
         } />
+        <Route path="/signin" element={
+          <>
+            <Login />
+          </>
+        } />
+        <Route path="/404" element={
+          <>
+            <NotFoundPage />
+          </>
+        } />
         <Route
           path="*"
-          element={<Navigate to="/signin" />}
+          element={<Navigate to="/404" />}
         />
       </Routes>
     </div>
