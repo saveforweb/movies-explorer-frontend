@@ -75,10 +75,15 @@
   line-height: 16px;
   color: var(--color-white);
   text-decoration: none;
+  transition: 0.5s;
 }
 
 .profile__links-block-item-link_color_red {
   color: var(--color-red);
+}
+
+.profile__links-block-item-link:hover {
+  opacity: 70%;
 }
 
 @media screen and (max-width: 768px) {

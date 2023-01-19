@@ -28,6 +28,11 @@
   cursor: pointer;
   display: block;
   width: 100%;
+  transition: 0.5s;
+}
+
+.button-form__item:hover {
+  opacity: 70%;
 }
 
 .button-form__text {
@@ -46,6 +51,11 @@
 .button-form__text-link {
   text-decoration: none;
   color: var(--color-blue);
+  transition: 0.5s;
+}
+
+.button-form__text-link:hover {
+  opacity: 70%;
 }
 
 @media screen and (max-width: 425px) {

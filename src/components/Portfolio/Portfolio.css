@@ -42,6 +42,11 @@
   display: block;
   position: relative;
   letter-spacing: -0.04em;
+  transition: 0.5s;
+}
+
+.portfolio__list-item-link:hover {
+  opacity: 70%;
 }
 
 .portfolio__list-item-link::after {

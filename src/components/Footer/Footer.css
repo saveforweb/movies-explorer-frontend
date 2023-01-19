@@ -46,6 +46,11 @@
   line-height: 16px;
   color: var(--color-white);
   text-decoration: none;
+  transition: 0.5s;
+}
+
+.footer__block-list-item-link:hover {
+  opacity: 70%;
 }
 
 .footer__block-copyright {

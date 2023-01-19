@@ -75,6 +75,11 @@
   text-decoration: none;
   position: absolute;
   bottom: 0px;
+  transition: 0.5s;
+}
+
+.about-me__profile-description-link:hover {
+  opacity: 70%;
 }
 
 .about-me__profile-image-photo {

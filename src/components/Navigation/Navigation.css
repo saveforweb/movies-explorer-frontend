@@ -17,6 +17,11 @@
   text-decoration: none;
   font-size: 12px;
   line-height: 16px;
+  transition: 0.5s;
+}
+
+.navigation__link:hover {
+  opacity: 70%;
 }
 
 .navigation__link-button {
@@ -35,6 +40,11 @@
   );
   padding: 8px 20px;
   border-radius: 3px;
+  transition: 0.5s;
+}
+
+.navigation__link-button:hover {
+  opacity: 70%;
 }
 
 .navigation__user-block {
@@ -64,6 +74,11 @@
   );
   color: var(--color-white);
   text-decoration: none;
+  transition: 0.5s;
+}
+
+.navigation__user-block-account:hover {
+  opacity: 70%;
 }
 
 .navigation__user-block-account::after {
@@ -87,6 +102,11 @@
   text-decoration: none;
   font-size: 14px;
   line-height: 18px;
+  transition: 0.5s;
+}
+
+.navigation__user-block-link:hover {
+  opacity: 70%;
 }
 
 .navigation__mobile-menu-icon {

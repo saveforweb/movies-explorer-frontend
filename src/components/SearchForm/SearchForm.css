@@ -61,6 +61,11 @@
   cursor: pointer;
   display: block;
   min-width: 70px;
+  transition: 0.5s;
+}
+
+.search-form__button-search:hover {
+  opacity: 70%;
 }
 
 .search-form__filter-block {
@@ -146,6 +151,11 @@
   font-size: 12px;
   line-height: 18px;
   cursor: pointer;
+  transition: 0.5s;
+}
+
+.search-form__toggle-label:hover {
+  opacity: 70%;
 }
 
 @media screen and (max-width: 767px) {

@@ -31,6 +31,11 @@
   align-items: center;
   justify-content: center;
   text-decoration: none;
+  transition: 0.5s;
+}
+
+.navtab__list-link:hover {
+  opacity: 70%;
 }
 
 @media screen and (max-width: 767px) {
