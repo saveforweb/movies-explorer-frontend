@@ -1,0 +1,12 @@
+.logo {
+  display: inline-block;
+  height: 38px;
+}
+
+.logo__image {
+  transition: 0.5s;
+}
+
+.logo__image:hover {
+  opacity: 70%;
+}
