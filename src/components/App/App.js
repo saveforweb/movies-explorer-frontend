@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -9,6 +9,8 @@ import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
+import cardsData from '../../utils/moviesCards';
+import userMoviesCards from '../../utils/userMoviesCards';
 
 function App() {
   const [loggedIn, setLoggedIn] = React.useState(true);
@@ -26,7 +28,7 @@ function App() {
         <Route path="/movies" element={
           <>
             <Header loggedIn={loggedIn} />
-            <Movies />
+            <Movies cards={cardsData.data} />
             <Footer />
           </>
         } />
@@ -39,7 +41,7 @@ function App() {
         <Route path="/saved-movies" element={
           <>
             <Header loggedIn={loggedIn} />
-            <SavedMovies />
+            <SavedMovies cards={userMoviesCards.data} />
             <Footer />
           </>
         } />

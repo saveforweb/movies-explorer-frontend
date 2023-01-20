@@ -1,14 +1,14 @@
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
-function SavedMovies() {
-
+function SavedMovies(props) {
+    const { cards } = props;
     const isSavedCard = true;
 
     return (
         <>
             <SearchForm />
-            <MoviesCardList isSavedCard={isSavedCard} />
+            <MoviesCardList isSavedCard={isSavedCard} cards={cards} />
         </>
     );
 }

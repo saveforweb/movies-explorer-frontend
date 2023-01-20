@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 function Navigation(props) {
 
@@ -6,7 +7,7 @@ function Navigation(props) {
 
     const [isMenuOpen, toggleMenu] = useState(false);
 
-    function handlerClickMenuButton() {
+    function handlerClickMenu() {
         toggleMenu(!isMenuOpen);
     }
 
@@ -33,22 +34,22 @@ function Navigation(props) {
             {loggedIn ?
                 <>
                     <div className={overlayClassName} onClick={handleCLickOverlay}></div>
-                    <button className={menuButtonClassName} onClick={handlerClickMenuButton}></button>
+                    <button className={menuButtonClassName} onClick={handlerClickMenu}></button>
                     <nav className={menuClassName}>
                         <ul className='navigation__user-block-list'>
                             <li className='navigation__user-block-list-item navigation__user-block-list-item_mobile'>
-                                <a href='/' className='navigation__user-block-link'>Главная</a>
+                                <NavLink to="/" className='navigation__user-block-link' onClick={handlerClickMenu}>Главная</NavLink>
                             </li>
                             <li className='navigation__user-block-list-item'>
-                                <a href='/movies' className='navigation__user-block-link'>Фильмы</a>
+                                <NavLink to="/movies" className='navigation__user-block-link' onClick={handlerClickMenu}>Фильмы</NavLink>
                             </li>
                             <li className='navigation__user-block-list-item'>
-                                <a href='/saved-movies' className='navigation__user-block-link'>Сохранённые фильмы</a>
+                                <NavLink to="/saved-movies" className='navigation__user-block-link' onClick={handlerClickMenu}>Сохранённые фильмы</NavLink>
                             </li>
                         </ul>
                         <ul className='navigation__user-block-list'>
                             <li className='navigation__user-block-list-item'>
-                                <a href='/profile' className='navigation__user-block-account'>Аккаунт</a>
+                                <NavLink to="/profile" className='navigation__user-block-account' onClick={handlerClickMenu}>Аккаунт</NavLink>
                             </li>
                         </ul>
                     </nav>

@@ -2,7 +2,7 @@ import SectionHeader from "../SectionHeader/SectionHeader";
 
 function Techs() {
     return (
-        <section className="techs">
+        <section className="techs" id="techs">
             <div className="techs__container">
                 <SectionHeader text="Технологии" />
                 <div className="techs__about">

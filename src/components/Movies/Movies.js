@@ -1,11 +1,12 @@
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
-function Movies() {
+function Movies(props) {
+    const { cards } = props;
     return (
         <>
             <SearchForm />
-            <MoviesCardList />
+            <MoviesCardList cards={cards} />
         </>
     );
 }
