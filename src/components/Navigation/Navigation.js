@@ -30,7 +30,7 @@ function Navigation(props) {
     );
 
     return (
-        <>
+        <div className='navigation'>
             {loggedIn ?
                 <>
                     <div className={overlayClassName} onClick={handleCLickOverlay}></div>
@@ -66,7 +66,7 @@ function Navigation(props) {
                     </ul>
                 </nav>
             }
-        </>
+            </div>
     );
 }
 

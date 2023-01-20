@@ -5,7 +5,7 @@ import ButtonForm from "../ButtonForm/ButtonForm";
 function Login() {
     return (
         <>
-            <section className="registration">
+            <section className="login">
                 <form className="login__form">
                     <span className="login__form-content">
                         <Logo />
