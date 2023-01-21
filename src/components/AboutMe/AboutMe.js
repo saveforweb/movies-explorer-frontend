@@ -8,10 +8,10 @@ function AboutMe() {
             <SectionHeader text="Студент" />
             <div className="about-me__profile">
                 <div className="about-me__profile-description">
-                    <h3 className="about-me__profile-description-title">Виталий</h3>
-                    <p className="about-me__profile-description-subtitle">Фронтенд-разработчик, 30 лет</p>
+                    <h3 className="about-me__profile-description-title">Антон</h3>
+                    <p className="about-me__profile-description-subtitle">Фронтенд-разработчик, 35 лет</p>
                     <p className="about-me__profile-description-text">
-                        Я&nbsp;родился и&nbsp;живу в&nbsp;Саратове, закончил факультет экономики СГУ. У&nbsp;меня есть жена и&nbsp;дочь. Я&nbsp;люблю слушать музыку, а&nbsp;ещё увлекаюсь бегом. Недавно начал кодить. С&nbsp;2015 года работал в&nbsp;компании &laquo;СКБ Контур&raquo;. После того, как прошёл курс по&nbsp;веб-разработке, начал заниматься фриланс-заказами и&nbsp;ушёл с&nbsp;постоянной работы.
+                        Я получаю удовольствие от программирования и хочу заниматься любимым делом. Нравится ощущение погружения и потока при решении задач. Долгое время создавал полезные для компаний проекты в формате заказной веб-разработки в роли совладельца компании, менеджера продукта и дизайнера интерфейсов. Полученный опыт мне хочется соединить с программированием и посмотреть, что получится.
                     </p>
                     <a href="https://github.com/saveforweb" target="_blank" rel="noreferrer" className="about-me__profile-description-link">Github</a>
                 </div>
