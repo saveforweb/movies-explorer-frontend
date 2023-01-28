@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -9,11 +9,49 @@ import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
-import cardsData from '../../utils/moviesCards';
-import userMoviesCards from '../../utils/userMoviesCards';
+import MoviesApi from '../../utils/MoviesApi';
 
 function App() {
   const [loggedIn, setLoggedIn] = React.useState(true);
+  const [cardsArray, setCardsArray] = React.useState([]);
+  const [isLoading, setLoading] = React.useState(false);
+  const [isEmptySearch, setEmptySearch] = React.useState(false);
+  const [isMoviesApiError, setIsMoviesApiError] = React.useState(false);
+
+
+  function searchInLocalCards(searchValue) {
+    let searchResult = JSON.parse(localStorage.getItem('moviesCards'))?.filter(item => item.nameRU.toUpperCase().includes(searchValue.toUpperCase()));
+    setCardsArray(searchResult);
+
+    if (searchResult.length === 0) {
+      setEmptySearch(true);
+    } else {
+      setEmptySearch(false);
+    }
+  }
+
+  function handleClickSearchMoviesButton(searchValue) {
+    setLoading(true);
+
+    if (JSON.parse(localStorage.getItem('moviesCards'))) {
+      searchInLocalCards(searchValue);
+      setLoading(false);
+    } else {
+      MoviesApi.getCards()
+        .then((result) => {
+          setIsMoviesApiError(false);
+          localStorage.setItem('moviesCards', JSON.stringify(result))
+          searchInLocalCards(searchValue);
+        })
+        .catch((result) => {
+          console.log(result);
+          setIsMoviesApiError(true);
+        })
+        .finally(() => {
+          setLoading(false);
+        })
+    }
+  }
 
   return (
     <div className='page'>
@@ -28,7 +66,7 @@ function App() {
         <Route path="/movies" element={
           <>
             <Header loggedIn={loggedIn} />
-            <Movies cards={cardsData.data} />
+            <Movies cards={cardsArray} isEmptySearch={isEmptySearch} isLoading={isLoading} onSearch={handleClickSearchMoviesButton} isMoviesApiError={isMoviesApiError} />
             <Footer />
           </>
         } />
@@ -41,7 +79,7 @@ function App() {
         <Route path="/saved-movies" element={
           <>
             <Header loggedIn={loggedIn} />
-            <SavedMovies cards={userMoviesCards.data} />
+            <SavedMovies cards={cardsArray} isEmptySearch={isEmptySearch} isLoading={isLoading} onSearch={handleClickSearchMoviesButton} />
             <Footer />
           </>
         } />
