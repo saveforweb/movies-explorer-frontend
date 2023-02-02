@@ -7,6 +7,15 @@ function SearchForm(props) {
     const { search } = values;
     const [formError, setFormError] = React.useState(false);
     const [isChecked, setIsChecked] = React.useState(false);
+    const [isDisabled, setDisabled] = React.useState(true);
+
+    useEffect(() => {
+        if ((values.search.value && !values.search.error)) {
+            setDisabled(false);
+        } else {
+            setDisabled(true);
+        }
+    }, [values])
 
     useEffect(() => {
         if (localStorage.getItem(typeSearch)) {
@@ -22,10 +31,9 @@ function SearchForm(props) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        if (!e.target.checkValidity()) {
+        if (isDisabled) {
             setFormError(true)
         } else {
-            setFormError(false)
             localStorage.setItem(typeSearch, search.value);
             onSearch(search.value);
         }
@@ -47,11 +55,12 @@ function SearchForm(props) {
                         onChange={handleChange}
                         value={search.value}
                         onFocus={() => setFormError(false)}
+                        onBlur={() => setFormError(false)}
                     />
                     <button type="submit" className="search-form__button-search">Найти</button>
 
                 </form>
-                {formError && <div className="search-form__error">Нужно ввести ключевое слово</div>}
+                {formError && <div className="search-form__error">{search.error}</div>}
                 <div className="search-form__filter-block">
                     <input type="checkbox" id="short-films-filter" className="search-form__toggle-button" checked={isChecked} onChange={handleCheckbox} />
                     <label htmlFor="short-films-filter" className="search-form__toggle-label">Короткометражки</label>

@@ -4,3 +4,10 @@ export const moviesApiConfig = {
       "Content-Type": "application/json",
     }
   }
+
+  export const mainApiConfig = {
+    baseUrl: "http://localhost:3000",
+    headers: {
+      "Content-Type": "application/json",
+    }
+  }

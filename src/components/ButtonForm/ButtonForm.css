@@ -58,6 +58,12 @@
   opacity: 70%;
 }
 
+.button-form__item:disabled,
+.button-form__item[disabled] {
+  opacity: 10%;
+  cursor: default;
+}
+
 @media screen and (max-width: 425px) {
   .button-form__text {
     font-size: 12px;
