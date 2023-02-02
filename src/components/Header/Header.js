@@ -4,7 +4,7 @@ import Logo from '../Logo/Logo';
 
 function Header(props) {
 
-    const { loggedIn, isMenuOpen, onClickMenuButton, onClickOverlay } = props;
+    const { loggedIn, isMenuOpen, onClickMenuButton, onClickOverlay} = props;
 
     return (
         <header className='header'>

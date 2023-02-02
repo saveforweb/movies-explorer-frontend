@@ -1,4 +1,5 @@
-function Profile() {
+function Profile(props) {
+    const { onLogout } = props;
     return (
         <>
             <section className="profile">
@@ -20,7 +21,7 @@ function Profile() {
                         <a href="/" className="profile__links-block-item-link">Редактировать</a>
                     </li>
                     <li className="profile__links-block-item">
-                        <a href="/" className="profile__links-block-item-link profile__links-block-item-link_color_red">Выйти из аккаунта</a>
+                        <a href="/" className="profile__links-block-item-link profile__links-block-item-link_color_red" onClick={onLogout}>Выйти из аккаунта</a>
                     </li>
                 </ul>
             </section>

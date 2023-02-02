@@ -1,9 +1,8 @@
-import { mainApiConfig } from "./config";
-
 class MainApi {
     constructor(options) {
         this._baseUrl = options.baseUrl;
         this._headers = options.headers;
+        this._token = options.token;
     }
 
     _checkResponse(res) {
@@ -42,6 +41,28 @@ class MainApi {
             headers: this._headers
         })
     }
+
+    getUserInfo() {
+        return this._request(`${this._baseUrl}/users/me`, {
+            method: "GET",
+            headers: {
+                ...this._headers, 
+                Authorization: `Bearer ${this._token}`
+            }
+        })
+    }
+
+    checkToken(jwt) {
+        return this._request(`${this._baseUrl}/users/me`, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${jwt}`
+            }
+        })
+    }
+
+
 }
 
-export default new MainApi(mainApiConfig);
+export default MainApi;
