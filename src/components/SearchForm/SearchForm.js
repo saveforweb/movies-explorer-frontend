@@ -58,7 +58,6 @@ function SearchForm(props) {
                         onBlur={() => setFormError(false)}
                     />
                     <button type="submit" className="search-form__button-search">Найти</button>
-
                 </form>
                 {formError && <div className="search-form__error">{search.error}</div>}
                 <div className="search-form__filter-block">

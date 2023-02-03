@@ -4,7 +4,7 @@ import Preloader from "../Preloader/Preloader"
 
 function MoviesCardList(props) {
 
-    const { isSavedCard, cards, isLoading, isEmptySearch, isMoviesApiError } = props;
+    const { isSavedCard, cards, isLoading, isEmptySearch, isMoviesApiError, onClickLike, userCardsArray, onClickDislike, onDelete } = props;
 
     const [windowSize, setWindowSize] = React.useState(document.documentElement.scrollWidth);
     const [cardsToRender, setCardsToRender] = React.useState([]);
@@ -40,11 +40,28 @@ function MoviesCardList(props) {
     }, [cards, windowSize, cardsOptions.render])
 
     const cardList = cardsToRender.map((card) => {
+        let isLikedStatus = false;
+        let userCardIdLiked = '';
+
+        if(userCardsArray){
+            for (let i = 0; i < userCardsArray.length; i++) {
+                if (card.id === Number(userCardsArray[i].movieId)) {   
+                    isLikedStatus = true;
+                    userCardIdLiked = userCardsArray[i]._id;
+                }
+            }
+        }
+
         return (
             <MoviesCard
                 isSavedCard={isSavedCard}
                 card={card}
-                key={card.id}
+                key={card.id || card._id}
+                onClickLike={onClickLike}
+                isLikedStatus={isLikedStatus}
+                userCardIdLiked={userCardIdLiked}
+                onClickDislike={onClickDislike}
+                onDelete={onDelete}
             />
         );
     });
@@ -57,17 +74,21 @@ function MoviesCardList(props) {
         </button>
     );
 
+    const notFoundText = (
+        <div className='movies__not-found'>Ничего не найдено</div>
+    );
+
+    const emptyUserArray = (
+        <div className='movies__not-found'>У вас нет сохраненных карточек</div>
+    );
+
     const moviesList = (
         <>
             <ul className="movies__list">
-                {cardList}
+                {cardList ? cardList : emptyUserArray}
             </ul>
             {listButton}
         </>
-    );
-
-    const notFoundText = (
-        <div className='movies__not-found'>Ничего не найдено</div>
     );
 
     const apiErrorText = (

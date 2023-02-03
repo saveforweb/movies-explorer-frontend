@@ -46,7 +46,64 @@ class MainApi {
         return this._request(`${this._baseUrl}/users/me`, {
             method: "GET",
             headers: {
-                ...this._headers, 
+                ...this._headers,
+                Authorization: `Bearer ${this._token}`
+            }
+        })
+    }
+
+    updateUserInfo(name, email) {
+        return this._request(`${this._baseUrl}/users/me`, {
+            method: "PATCH",
+            body: JSON.stringify({
+                name: name,
+                email: email
+            }),
+            headers: {
+                ...this._headers,
+                Authorization: `Bearer ${this._token}`
+            }
+        })
+    }
+
+    getUserCards() {
+        return this._request(`${this._baseUrl}/movies`, {
+            method: "GET",
+            headers: {
+                ...this._headers,
+                Authorization: `Bearer ${this._token}`
+            }
+        })
+    }
+
+    deleteUserCard(id) {
+        return this._request(`${this._baseUrl}/movies/${id}`, {
+            method: 'DELETE',
+            headers: {
+                ...this._headers,
+                Authorization: `Bearer ${this._token}`
+            }
+        })
+    }
+
+    createUserCard(data) {
+        return this._request(`${this._baseUrl}/movies`, {
+            method: "POST",
+            body: JSON.stringify({
+                country: data.country,
+                director: data.director,
+                duration: data.duration,
+                year: data.year,
+                description: data.description,
+                image: `https://api.nomoreparties.co${data.image.url}`,
+                trailerLink: data.trailerLink,
+                thumbnail: `https://api.nomoreparties.co${data.image.formats.thumbnail.url}`,
+                movieId: data.id,
+                nameRU: data.nameRU,
+                nameEN: data.nameEN,
+            }),
+            headers: {
+                ...this._headers,
                 Authorization: `Bearer ${this._token}`
             }
         })
