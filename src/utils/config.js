@@ -6,7 +6,7 @@ export const moviesApiConfig = {
 }
 
 export const mainApiConfig = {
-  baseUrl: "http://localhost:3000",
+  baseUrl: "https://api.antonmovies.nomoredomains.club",
   headers: {
     "Content-Type": "application/json",
   }

@@ -30,13 +30,15 @@ function MoviesCard(props) {
     const cardImageUrl = card.image.url ? `https://api.nomoreparties.co${card.image.url}` : card.image;
 
     const getHours = () => {
-        const minutes = card.duration % 60;
-        const hourse = Math.round(card.duration / 60);
         let time;
-        if (hourse === 0) {
-            time = `${minutes} м.`;
+        let minutes;
+        let hours;
+        if (card.duration <= 60) {
+            time = `${card.duration} м.`;
         } else {
-            time = `${hourse} ч. ${minutes} м.`;
+            minutes = card.duration % 60;
+            hours = Math.round(card.duration / 60);
+            time = `${hours} ч. ${minutes} м.`;
         }
         return time;
     };
@@ -44,9 +46,13 @@ function MoviesCard(props) {
     return (
         <>
             <li className="movies-card">
-                <img src={cardImageUrl} alt="Изображение карточки" className="movies-card__image" />
+                <a href={card.trailerLink} className="movies-card__link" target={'_blank'} rel="noreferrer">
+                    <img src={cardImageUrl} alt="Изображение карточки" className="movies-card__image" />
+                </a>
                 <div className="movies-card__description">
-                    <h2 className="movies-card__title">{card.nameRU}</h2>
+                    <a href={card.trailerLink} className="movies-card__link" target={'_blank'} rel="noreferrer">
+                        <h2 className="movies-card__title">{card.nameRU}</h2>
+                    </a>
                     {isSavedCard ?
                         <button className="movies-card__delete-button" onClick={handlerClickDeleteButton}></button>
                         :

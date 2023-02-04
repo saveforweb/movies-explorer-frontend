@@ -99,6 +99,15 @@
   height: 175px;
 }
 
+.movies-card__link {
+  text-decoration: none;
+  transition: 0.5s;
+}
+
+.movies-card__link:hover {
+  opacity: 70%;
+}
+
 @media screen and (max-width: 1024px) {
   .movies-card__delete-button {
     visibility: visible;

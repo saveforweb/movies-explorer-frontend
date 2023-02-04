@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import useForm from "../../contexts/hooks/useForm";
 
 function SearchForm(props) {
-    const { onSearch, typeSearch, typeSearchFilter } = props;
+    const { onSearch, typeSearch, typeSearchFilter, onFilter } = props;
     const { values, handleChange, setValues } = useForm({ search: { 'value': '', 'error': '' } });
     const { search } = values;
     const [formError, setFormError] = React.useState(false);
@@ -31,7 +31,10 @@ function SearchForm(props) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        if (isDisabled) {
+        if(typeSearch === 'savedMoviesSearch'){
+            localStorage.setItem(typeSearch, search.value);
+            onSearch(search.value);
+        } else if (isDisabled) {
             setFormError(true)
         } else {
             localStorage.setItem(typeSearch, search.value);
@@ -41,6 +44,7 @@ function SearchForm(props) {
 
     function handleCheckbox() {
         setIsChecked(!isChecked);
+        onFilter(!isChecked)
         localStorage.setItem(typeSearchFilter, JSON.stringify(!isChecked));
     }
 

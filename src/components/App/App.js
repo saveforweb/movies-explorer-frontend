@@ -28,6 +28,10 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({});
   const [loggedIn, setLoggedIn] = React.useState(localStorage.getItem('loggedIn') && localStorage.getItem('loggedIn') === 'true');
   const [userCardsArray, setUserCardsArray] = React.useState([]);
+  const [isMoviesFilterOn, setIsMoviesFilterOn] = React.useState(localStorage.getItem('moviesFilter') && localStorage.getItem('moviesFilter') === 'true');
+  const [isSavedMoviesFilterOn, setIsSavedMoviesFilterOn] = React.useState(localStorage.getItem('savedMoviesFilter') && localStorage.getItem('savedMoviesFilter') === 'true');
+  const [searchValue, setSearchValue] = React.useState(localStorage.getItem('moviesSearch'));
+  const [savedMoviesSearch, setSavedMoviesSearch] = React.useState(localStorage.getItem('savedMoviesSearch'));
 
   const token = localStorage.getItem('jwt');
   const mainApi = new MainApi({ ...mainApiConfig, token });
@@ -56,8 +60,18 @@ function App() {
 
   }, [loggedIn]);
 
+  function filterInCards(searchResult) {
+    return searchResult?.filter(item => item.duration <= 40);
+  }
+
   function searchInLocalCards(searchValue) {
+    setSearchValue(searchValue);
     let searchResult = JSON.parse(localStorage.getItem('moviesCards'))?.filter(item => item.nameRU.toUpperCase().includes(searchValue.toUpperCase()));
+
+    if (isMoviesFilterOn) {
+      searchResult = filterInCards(searchResult);
+    }
+
     setCardsArray(searchResult);
 
     if (searchResult.length === 0) {
@@ -66,6 +80,10 @@ function App() {
       setEmptySearch(false);
     }
   }
+
+  React.useEffect(() => {
+    searchInLocalCards(searchValue);
+  }, [isMoviesFilterOn]);
 
   function handleClickSearchSavedMoviesButton(searchValue) {
     setLoading(true);
@@ -90,8 +108,13 @@ function App() {
     }
   }
 
-  function searchInSavedCards(searchValue) {
-    let searchResult = JSON.parse(localStorage.getItem('savedMoviesCards'))?.filter(item => item.nameRU.toUpperCase().includes(searchValue.toUpperCase()));
+  function searchInSavedCards(savedMoviesSearch) {
+    let searchResult = JSON.parse(localStorage.getItem('savedMoviesCards'))?.filter(item => item.nameRU.toUpperCase().includes(savedMoviesSearch.toUpperCase()));
+
+    if (isSavedMoviesFilterOn) {
+      searchResult = filterInCards(searchResult);
+    }
+
     setUserCardsArray(searchResult);
 
     if (searchResult.length === 0) {
@@ -100,6 +123,10 @@ function App() {
       setEmptySearch(false);
     }
   }
+
+  React.useEffect(() => {
+    searchInSavedCards(savedMoviesSearch);
+  }, [isSavedMoviesFilterOn]);
 
   function handleClickRegistrationButton(registrationValues) {
     const { name, email, password } = registrationValues;
@@ -233,6 +260,7 @@ function App() {
                 onClickLike={handleClickAddMoviesButton}
                 userCardsArray={userCardsArray}
                 onClickDislike={handleClickDislike}
+                onFilter={setIsMoviesFilterOn}
               />
               <Footer />
             </ProtectedRoute>
@@ -252,6 +280,7 @@ function App() {
                 isLoading={isLoading}
                 onSearch={handleClickSearchSavedMoviesButton}
                 onDelete={handleClickDeleteSavedButton}
+                onFilter={setIsSavedMoviesFilterOn}
               />
               <Footer />
             </ProtectedRoute>
