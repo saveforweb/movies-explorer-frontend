@@ -1,5 +1,4 @@
-# Реализация фронтенда для проекта Cinemus
+# Реализация фронтенда для проекта Cinemus (в работе)
 
-* Проект в работе
-
-Ссылка на макет: [https://disk.yandex.ru/d/dlyu3euQZigA1A](https://disk.yandex.ru/d/dlyu3euQZigA1A)
+- Ссылка на макет: [https://disk.yandex.ru/d/dlyu3euQZigA1A](https://disk.yandex.ru/d/dlyu3euQZigA1A)
+- Ссылка на пул реквест: [https://github.com/saveforweb/movies-explorer-frontend/pull/5](https://github.com/saveforweb/movies-explorer-frontend/pull/5)
