@@ -40,7 +40,7 @@ function App() {
   const token = StorageService.get('jwt');
   const mainApi = new MainApi({ ...mainApiConfig, token });
 
-  const [cardsForRender, isMoviesApiError] = useMovies(searchValueMovies, isFilterMovies, loggedIn)
+  const [cardsForRender, isMoviesApiError] = useMovies(searchValueMovies, isFilterMovies, loggedIn);
 
   function registration({ name, email, password }) {
     mainApi.signUp(name.value, email.value, password.value)

@@ -15,6 +15,7 @@ function SearchForm(props) {
         } else {
             setDisabled(true);
         }
+        setFormError(false);
     }, [values])
 
     function handleSubmit(e) {

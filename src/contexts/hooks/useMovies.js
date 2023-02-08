@@ -1,6 +1,6 @@
 import React from 'react';
 import MoviesApi from '../../utils/MoviesApi';
-
+import StorageService from '../../utils/storageService/storageService';
 
 const useMovies = (search = '', filter = false, loggedIn) => {
     const [cardsForRender, setCardsToRender] = React.useState([]);
@@ -10,14 +10,22 @@ const useMovies = (search = '', filter = false, loggedIn) => {
     React.useEffect(() => {
         if (!loggedIn) return;
 
-        MoviesApi.getCards()
+        const haveCardsFromLocalStorage = StorageService.get('cardsMovies');
+        
+        if(!haveCardsFromLocalStorage){
+            MoviesApi.getCards()
             .then((result) => {
                 setCards(result)
+                StorageService.save('cardsMovies', result)
             })
             .catch((err) => {
                 console.error(err);
                 setMoviesApiError(true);
             })
+        } else {
+            setCards(haveCardsFromLocalStorage);
+        }
+
     }, [loggedIn]);
 
     React.useEffect(() => {
