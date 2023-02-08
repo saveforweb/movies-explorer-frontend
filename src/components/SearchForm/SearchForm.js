@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import useForm from "../../contexts/hooks/useForm";
+import StorageService from '../../utils/storageService/storageService';
 
 function SearchForm(props) {
-    const { onSearch, typeSearch, typeSearchFilter, onFilter } = props;
-    const { values, handleChange, setValues } = useForm({ search: { 'value': '', 'error': '' } });
+    const { typeSearch, typeSearchFilter, isFilterMovies, setFilterMovies, setSearchValueMovies, searchValueMovies } = props;
+    const { values, handleChange, setValues } = useForm({ search: { 'value': searchValueMovies, 'error': '' } });
     const { search } = values;
-    const [formError, setFormError] = React.useState(false);
-    const [isChecked, setIsChecked] = React.useState(false);
+    const [isFormError, setFormError] = React.useState(false);
     const [isDisabled, setDisabled] = React.useState(true);
 
-    useEffect(() => {
+    React.useEffect(() => {
         if ((values.search.value && !values.search.error)) {
             setDisabled(false);
         } else {
@@ -17,35 +17,19 @@ function SearchForm(props) {
         }
     }, [values])
 
-    useEffect(() => {
-        if (localStorage.getItem(typeSearch)) {
-            const storageSearchValue = localStorage.getItem(typeSearch);
-            onSearch(storageSearchValue);
-            setValues({ search: { 'value': storageSearchValue, 'error': '' } })
-        }
-        if (localStorage.getItem(typeSearchFilter)) {
-            const localCheckStatus = JSON.parse(localStorage.getItem(typeSearchFilter));
-            setIsChecked(localCheckStatus);
-        }
-    }, [])
-
     function handleSubmit(e) {
         e.preventDefault();
-        if(typeSearch === 'savedMoviesSearch'){
-            localStorage.setItem(typeSearch, search.value);
-            onSearch(search.value);
-        } else if (isDisabled) {
-            setFormError(true)
+        if (!isDisabled) {
+            setSearchValueMovies(search.value);
+            StorageService.save('searchValueMovies', search.value);
         } else {
-            localStorage.setItem(typeSearch, search.value);
-            onSearch(search.value);
+            setFormError(true); 
         }
     }
 
     function handleCheckbox() {
-        setIsChecked(!isChecked);
-        onFilter(!isChecked)
-        localStorage.setItem(typeSearchFilter, JSON.stringify(!isChecked));
+        setFilterMovies(!isFilterMovies);
+        StorageService.save('isFilterMovies', !isFilterMovies);
     }
 
     return (
@@ -63,9 +47,9 @@ function SearchForm(props) {
                     />
                     <button type="submit" className="search-form__button-search">Найти</button>
                 </form>
-                {formError && <div className="search-form__error">{search.error}</div>}
+                {isFormError && <div className="search-form__error">{search.error ? search.error : 'Нужно ввести ключевое слово'}</div>}
                 <div className="search-form__filter-block">
-                    <input type="checkbox" id="short-films-filter" className="search-form__toggle-button" checked={isChecked} onChange={handleCheckbox} />
+                    <input type="checkbox" id="short-films-filter" className="search-form__toggle-button" checked={isFilterMovies} onChange={handleCheckbox} />
                     <label htmlFor="short-films-filter" className="search-form__toggle-label">Короткометражки</label>
                 </div>
             </section>

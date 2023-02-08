@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 
 function MoviesCard(props) {
-    const { isSavedCard, card, onClickLike, onClickDislike, isLikedStatus, userCardIdLiked, onDelete } = props;
+    const { isSavedCard, card, onLike, onDislke, isLikedStatus, userCardIdLiked } = props;
 
     const [isLiked, toggleLike] = useState(false);
 
     function handlerClickLikeButton() {
         if (isLiked === false) {
-            onClickLike(card);
+            onLike(card);
             toggleLike(!isLiked);
         } else {
-            onClickDislike(userCardIdLiked);
+            onDislke(userCardIdLiked);
             toggleLike(!isLiked);
         }
     }
 
     function handlerClickDeleteButton() {
-        onDelete(card._id);
+        onDislke(card._id);
     }
 
     React.useEffect(() => {

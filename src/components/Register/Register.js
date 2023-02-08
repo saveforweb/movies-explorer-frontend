@@ -2,7 +2,7 @@ import Logo from "../Logo/Logo";
 import InputText from "../InputText/InputText";
 import ButtonForm from "../ButtonForm/ButtonForm";
 import useForm from "../../contexts/hooks/useForm";
-import React, { useEffect } from "react";
+import React from "react";
 
 function Register(props) {
     const { onRegistration, registrationError, setRegistrationError } = props;
@@ -15,7 +15,7 @@ function Register(props) {
 
     const [isDisabled, setDisabled] = React.useState(true);
 
-    useEffect(() => {
+    React.useEffect(() => {
         if ((values.name.value && !values.name.error) && (values.email.value && !values.email.error) && (values.password.value && !values.password.error)) {
             setDisabled(false);
         } else {

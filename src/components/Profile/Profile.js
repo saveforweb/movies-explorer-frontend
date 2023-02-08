@@ -5,7 +5,8 @@ import InputTextProfile from "../InputTextProfile/InputTextProfile";
 
 function Profile(props) {
     const currentUser = React.useContext(CurrentUserContext);
-    const { onEditUser, onLogout, editUserError, setEditUserError } = props;
+    const { onLogout, editUser, editUserError, setEditUserError } = props;
+
     const [isDisabled, setDisabled] = React.useState(true);
 
     const { values, handleChange, setValues } = useForm({
@@ -25,17 +26,16 @@ function Profile(props) {
     React.useEffect(() => {
         if ((!values.name.error && values.name.value !== currentUser.name) || (!values.email.error && values.email.value !== currentUser.email)) {
             setDisabled(false);
+            setEditUserError('');
         } else {
             setDisabled(true);
         }
-
-        setEditUserError('');
     }, [values])
 
     function handleSubmit(e) {
         e.preventDefault();
-        onEditUser(values)
         setDisabled(true);
+        editUser(values);
     }
 
     return (
@@ -54,7 +54,8 @@ function Profile(props) {
                             labelText="Имя"
                             minLengthValue="2"
                             maxLengthValue="40"
-                            isRequired={true} />
+                            isRequired={true}
+                        />
                         <InputTextProfile
                             id="email"
                             onChange={handleChange}
@@ -65,7 +66,8 @@ function Profile(props) {
                             labelText="E-mail"
                             minLengthValue="2"
                             maxLengthValue="40"
-                            isRequired={true} />
+                            isRequired={true}
+                        />
                     </form>
                 </div>
                 <ul className="profile__links-block">

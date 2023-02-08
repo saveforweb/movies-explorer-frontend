@@ -2,7 +2,7 @@ import Logo from "../Logo/Logo";
 import InputText from "../InputText/InputText";
 import ButtonForm from "../ButtonForm/ButtonForm";
 import useForm from "../../contexts/hooks/useForm";
-import React, { useEffect } from "react";
+import React from "react";
 
 function Login(props) {
     const { onLogin, loginError, setLoginError } = props;
@@ -15,7 +15,7 @@ function Login(props) {
 
     const [isDisabled, setDisabled] = React.useState(true);
 
-    useEffect(() => {
+    React.useEffect(() => {
         if ((values.email.value && !values.email.error) && (values.password.value && !values.password.error)) {
             setDisabled(false);
         } else {
