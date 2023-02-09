@@ -22,7 +22,7 @@ function SearchForm(props) {
         e.preventDefault();
         if (!isDisabled) {
             setSearchValueMovies(search.value);
-            StorageService.save('searchValueMovies', search.value);
+            StorageService.save(typeSearch, search.value);
         } else {
             setFormError(true); 
         }
@@ -30,7 +30,7 @@ function SearchForm(props) {
 
     function handleCheckbox() {
         setFilterMovies(!isFilterMovies);
-        StorageService.save('isFilterMovies', !isFilterMovies);
+        StorageService.save(typeSearchFilter, !isFilterMovies);
     }
 
     return (

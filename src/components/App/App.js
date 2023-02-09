@@ -9,7 +9,6 @@ import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
-import MoviesApi from '../../utils/MoviesApi';
 import MainApi from '../../utils/MainApi';
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
@@ -17,6 +16,7 @@ import { mainApiConfig } from '../../utils/config';
 import { ProtectedRouteAfterLogin } from '../ProtectedRouteAfterLogin/ProtectedRouteAfterLogin';
 import StorageService from '../../utils/storageService/storageService';
 import useMovies from '../../contexts/hooks/useMovies';
+import useSavedMovies from '../../contexts/hooks/useSavedMovies';
 
 function App() {
   const navigate = useNavigate();
@@ -29,18 +29,22 @@ function App() {
   const [loginError, setLoginError] = React.useState('');
   const [editUserError, setEditUserError] = React.useState('');
 
-  const [userCardsArray, setUserCardsArray] = React.useState([]);
-
   const [isLoading, setLoading] = React.useState(false);
-  const [isEmptySearch, setEmptySearch] = React.useState(false);
 
   const [isFilterMovies, setFilterMovies] = React.useState(!!StorageService.get('isFilterMovies'));
   const [searchValueMovies, setSearchValueMovies] = React.useState(typeof StorageService.get('searchValueMovies') === 'string' ? StorageService.get('searchValueMovies') : '');
 
+  const [isFilterSavedMovies, setFilterSavedMovies] = React.useState(false);
+  const [searchValueSavedMovies, setSearchValueSavedMovies] = React.useState('');
+
   const token = StorageService.get('jwt');
   const mainApi = new MainApi({ ...mainApiConfig, token });
 
-  const [cardsForRender, isMoviesApiError] = useMovies(searchValueMovies, isFilterMovies, loggedIn);
+  const [cardsForRender, isMoviesApiError, isEmptySearch] = useMovies(searchValueMovies, isFilterMovies, loggedIn);
+  const [savedCardsForRender, isSavedMoviesApiError, isSavedEmptySearch] = useSavedMovies(searchValueSavedMovies, isFilterSavedMovies, loggedIn);
+
+
+  
 
   function registration({ name, email, password }) {
     mainApi.signUp(name.value, email.value, password.value)
@@ -111,7 +115,7 @@ function App() {
         .then(({ data }) => {
           setLoggedIn(true);
           setCurrentUser(data);
-          StorageService.save('loggedIn', true)
+          StorageService.save('loggedIn', true);
         })
         .catch((err) => {
           console.log(err);
@@ -123,6 +127,7 @@ function App() {
       setLoggedIn(false);
       StorageService.save('loggedIn', false);
     }
+    setSearchValueSavedMovies('');
   }, [loggedIn, location]);
 
   return (
@@ -164,10 +169,15 @@ function App() {
             <ProtectedRoute loggedIn={loggedIn}>
               <Header loggedIn={loggedIn} />
               <SavedMovies
-                cards={userCardsArray}
-                isEmptySearch={isEmptySearch}
+                cards={savedCardsForRender}
+                isEmptySearch={isSavedEmptySearch}
+                isMoviesApiError={isSavedMoviesApiError}
                 isLoading={isLoading}
                 onDelete={deleteUserMovie}
+                isFilterSavedMovies={isFilterSavedMovies}
+                setFilterSavedMovies={setFilterSavedMovies}
+                setSearchValueSavedMovies={setSearchValueSavedMovies}
+                searchValueSavedMovies={searchValueSavedMovies}
               />
               <Footer />
             </ProtectedRoute>

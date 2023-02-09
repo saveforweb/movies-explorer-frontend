@@ -6,8 +6,8 @@ function Movies(props) {
     return (
         <>
             <SearchForm
-                typeSearch='moviesSearch'
-                typeSearchFilter="moviesFilter"
+                typeSearch='searchValueMovies'
+                typeSearchFilter="isFilterMovies"
                 isFilterMovies={isFilterMovies}
                 setFilterMovies={setFilterMovies}
                 setSearchValueMovies={setSearchValueMovies}
