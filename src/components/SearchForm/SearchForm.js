@@ -3,7 +3,7 @@ import useForm from "../../contexts/hooks/useForm";
 import StorageService from '../../utils/storageService/storageService';
 
 function SearchForm(props) {
-    const { typeSearch, typeSearchFilter, isFilterMovies, setFilterMovies, setSearchValueMovies, searchValueMovies } = props;
+    const { typeSearch, typeSearchFilter, isFilterMovies, setFilterMovies, setSearchValueMovies, searchValueMovies, getCards } = props;
     const { values, handleChange, setValues } = useForm({ search: { 'value': searchValueMovies, 'error': '' } });
     const { search } = values;
     const [isFormError, setFormError] = React.useState(false);
@@ -21,10 +21,15 @@ function SearchForm(props) {
     function handleSubmit(e) {
         e.preventDefault();
         if (!isDisabled) {
-            setSearchValueMovies(search.value);
+            if (typeSearch === 'searchValueMovies') {
+                setSearchValueMovies(search.value);
+                getCards();
+            } else {
+                setSearchValueMovies(search.value);
+            }
             StorageService.save(typeSearch, search.value);
         } else {
-            setFormError(true); 
+            setFormError(true);
         }
     }
 

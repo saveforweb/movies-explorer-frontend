@@ -2,17 +2,16 @@ import React from 'react';
 import MoviesApi from '../../utils/MoviesApi';
 import StorageService from '../../utils/storageService/storageService';
 
-const useMovies = (search = '', filter = false, loggedIn) => {
+const useMovies = (search = '', filter = false, loggedIn, setLoading) => {
     const [cardsForRender, setCardsToRender] = React.useState([]);
     const [cards, setCards] = React.useState([]);
     const [isMoviesApiError, setMoviesApiError] = React.useState(false);
     const [isEmptySearch, setEmptySearch] = React.useState(false);
 
-    React.useEffect(() => {
+    function getCards() {
         if (!loggedIn) return;
-
+        setLoading(true);
         const haveCardsFromLocalStorage = StorageService.get('cardsMovies');
-
         if (!haveCardsFromLocalStorage) {
             MoviesApi.getCards()
                 .then((result) => {
@@ -23,11 +22,20 @@ const useMovies = (search = '', filter = false, loggedIn) => {
                     console.error(err);
                     setMoviesApiError(true);
                 })
+                .finally(() =>{
+                    setLoading(false);
+                })
         } else {
-            setCards(haveCardsFromLocalStorage);
+            setCards(haveCardsFromLocalStorage || []);
+            setLoading(false);
         }
+    };
 
-    }, [loggedIn]);
+    React.useEffect(() => {
+        if(!loggedIn) return;
+        const haveCardsFromLocalStorage = StorageService.get('cardsMovies');
+        setCards(haveCardsFromLocalStorage || []);
+    }, [loggedIn])
 
     React.useEffect(() => {
         let result = [];
@@ -53,7 +61,7 @@ const useMovies = (search = '', filter = false, loggedIn) => {
 
     }, [cards, search, filter, setCardsToRender]);
 
-    return [cardsForRender, isMoviesApiError, isEmptySearch]
+    return [cardsForRender, isMoviesApiError, isEmptySearch, getCards]
 }
 
 export default useMovies;

@@ -40,11 +40,8 @@ function App() {
   const token = StorageService.get('jwt');
   const mainApi = new MainApi({ ...mainApiConfig, token });
 
-  const [cardsForRender, isMoviesApiError, isEmptySearch] = useMovies(searchValueMovies, isFilterMovies, loggedIn);
+  const [cardsForRender, isMoviesApiError, isEmptySearch, getCards] = useMovies(searchValueMovies, isFilterMovies, loggedIn, setLoading);
   const [savedCardsForRender, isSavedMoviesApiError, isSavedEmptySearch] = useSavedMovies(searchValueSavedMovies, isFilterSavedMovies, loggedIn);
-
-
-  
 
   function registration({ name, email, password }) {
     mainApi.signUp(name.value, email.value, password.value)
@@ -155,6 +152,7 @@ function App() {
                 setSearchValueMovies={setSearchValueMovies}
                 searchValueMovies={searchValueMovies}
                 isMoviesApiError={isMoviesApiError}
+                getCards={getCards}
               />
               <Footer />
             </ProtectedRoute>
