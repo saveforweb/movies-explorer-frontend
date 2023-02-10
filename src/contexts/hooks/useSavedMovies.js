@@ -5,7 +5,7 @@ import { mainApiConfig } from '../../utils/config';
 
 const useSavedMovies = (search = '', filter = false, loggedIn) => {
     const [savedCardsForRender, setSavedCardsForRender] = React.useState([]);
-    const [cards, setCards] = React.useState([]);
+    const [cards, setSavedCards] = React.useState([]);
     const [isSavedMoviesApiError, setSavedMoviesApiError] = React.useState(false);
     const [isSavedEmptySearch, setSavedEmptySearch] = React.useState(false);
 
@@ -21,7 +21,7 @@ const useSavedMovies = (search = '', filter = false, loggedIn) => {
         if (!haveCardsFromLocalStorage) {
             mainApi.getUserCards()
                 .then(({ data }) => {
-                    setCards(data)
+                    setSavedCards(data)
                     StorageService.save('cardsSavedMovies', data);
                 })
                 .catch((err) => {
@@ -29,7 +29,7 @@ const useSavedMovies = (search = '', filter = false, loggedIn) => {
                     setSavedMoviesApiError(true);
                 })
         } else {
-            setCards(haveCardsFromLocalStorage);
+            setSavedCards(haveCardsFromLocalStorage);
         }
 
     }, [loggedIn]);
@@ -56,7 +56,7 @@ const useSavedMovies = (search = '', filter = false, loggedIn) => {
 
     }, [cards, search, filter, setSavedCardsForRender]);
 
-    return [savedCardsForRender, isSavedMoviesApiError, isSavedEmptySearch]
+    return [savedCardsForRender, isSavedMoviesApiError, isSavedEmptySearch, setSavedCards]
 }
 
 export default useSavedMovies;

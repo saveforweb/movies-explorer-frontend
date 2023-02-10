@@ -61,7 +61,7 @@ const useMovies = (search = '', filter = false, loggedIn, setLoading) => {
 
     }, [cards, search, filter, setCardsToRender]);
 
-    return [cardsForRender, isMoviesApiError, isEmptySearch, getCards]
+    return [cardsForRender, isMoviesApiError, isEmptySearch, getCards, setCards]
 }
 
 export default useMovies;

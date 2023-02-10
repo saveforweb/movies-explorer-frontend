@@ -41,7 +41,9 @@ function App() {
   const mainApi = new MainApi({ ...mainApiConfig, token });
 
   const [cardsForRender, isMoviesApiError, isEmptySearch, getCards] = useMovies(searchValueMovies, isFilterMovies, loggedIn, setLoading);
-  const [savedCardsForRender, isSavedMoviesApiError, isSavedEmptySearch] = useSavedMovies(searchValueSavedMovies, isFilterSavedMovies, loggedIn);
+  const [savedCardsForRender, isSavedMoviesApiError, isSavedEmptySearch, setSavedCards] = useSavedMovies(searchValueSavedMovies, isFilterSavedMovies, loggedIn);
+
+  const [tokenState, setTokenState] = React.useState('');
 
   function registration({ name, email, password }) {
     mainApi.signUp(name.value, email.value, password.value)
@@ -86,10 +88,25 @@ function App() {
     setLoggedIn(false);
   }
 
-  function addUserMovie(card) {
+  function likeUserMovie(card) {
     mainApi.createUserCard(card)
+      .then(({data}) => {
+        const cardsAfterAdd = StorageService.get('cardsSavedMovies');
+        cardsAfterAdd.push(data);
+        StorageService.save('cardsSavedMovies', cardsAfterAdd);
+        setSavedCards(cardsAfterAdd);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function dislikeUserMovie(cardId) {
+    mainApi.deleteUserCard(cardId)
       .then((result) => {
-        console.log({ 'createUserCard': result });
+        const cardsAfterDelete = StorageService.get('cardsSavedMovies')?.filter(item => item._id !== cardId);
+        StorageService.save('cardsSavedMovies', cardsAfterDelete);
+        setSavedCards(cardsAfterDelete);
       })
       .catch((err) => {
         console.log(err);
@@ -99,7 +116,9 @@ function App() {
   function deleteUserMovie(cardId) {
     mainApi.deleteUserCard(cardId)
       .then((result) => {
-        console.log({ 'deleteUserCard': result });
+        const cardsAfterDelete = StorageService.get('cardsSavedMovies')?.filter(item => item._id !== cardId);
+        StorageService.save('cardsSavedMovies', cardsAfterDelete);
+        setSavedCards(cardsAfterDelete);
       })
       .catch((err) => {
         console.log(err);
@@ -108,18 +127,21 @@ function App() {
 
   React.useEffect(() => {
     if (token) {
-      mainApi.checkToken(token)
-        .then(({ data }) => {
-          setLoggedIn(true);
-          setCurrentUser(data);
-          StorageService.save('loggedIn', true);
-        })
-        .catch((err) => {
-          console.log(err);
-          logout();
-          setLoggedIn(false);
-          StorageService.save('loggedIn', false);
-        })
+      if (token !== tokenState) {
+        mainApi.checkToken(token)
+          .then(({ data }) => {
+            setLoggedIn(true);
+            setCurrentUser(data);
+            StorageService.save('loggedIn', true);
+            setTokenState(token);
+          })
+          .catch((err) => {
+            console.log(err);
+            logout();
+            setLoggedIn(false);
+            StorageService.save('loggedIn', false);
+          })
+      }
     } else {
       setLoggedIn(false);
       StorageService.save('loggedIn', false);
@@ -143,10 +165,11 @@ function App() {
               <Header loggedIn={loggedIn} />
               <Movies
                 cards={cardsForRender}
+                userCardsArray={savedCardsForRender}
                 isEmptySearch={isEmptySearch}
                 isLoading={isLoading}
-                onLike={addUserMovie}
-                onDislike={deleteUserMovie}
+                onLike={likeUserMovie}
+                onDislike={dislikeUserMovie}
                 isFilterMovies={isFilterMovies}
                 setFilterMovies={setFilterMovies}
                 setSearchValueMovies={setSearchValueMovies}

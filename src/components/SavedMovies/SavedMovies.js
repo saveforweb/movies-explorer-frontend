@@ -2,7 +2,7 @@ import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
 function SavedMovies(props) {
-    const { cards, isLoading, isEmptySearch, onDislike, isFilterSavedMovies, setFilterSavedMovies, setSearchValueSavedMovies, searchValueSavedMovies } = props;
+    const { cards, isLoading, isEmptySearch, isFilterSavedMovies, setFilterSavedMovies, setSearchValueSavedMovies, searchValueSavedMovies, onDelete } = props;
     const isSavedCard = true;
 
     return (
@@ -20,7 +20,7 @@ function SavedMovies(props) {
                 cards={cards}
                 isLoading={isLoading}
                 isEmptySearch={isEmptySearch}
-                onDislike={onDislike}
+                onDelete={onDelete}
             />
         </>
     );

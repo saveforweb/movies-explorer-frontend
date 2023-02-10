@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 function MoviesCard(props) {
-    const { isSavedCard, card, onLike, onDislke, isLikedStatus, userCardIdLiked } = props;
+    const { isSavedCard, card, onLike, onDislike, isLikedStatus, userCardIdLiked, onDelete } = props;
 
     const [isLiked, toggleLike] = useState(false);
 
@@ -10,13 +10,13 @@ function MoviesCard(props) {
             onLike(card);
             toggleLike(!isLiked);
         } else {
-            onDislke(userCardIdLiked);
+            onDislike(userCardIdLiked);
             toggleLike(!isLiked);
         }
     }
 
     function handlerClickDeleteButton() {
-        onDislke(card._id);
+        onDelete(card._id);
     }
 
     React.useEffect(() => {

@@ -2,7 +2,7 @@ import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
 function Movies(props) {
-    const { cards, isLoading, isEmptySearch, onLike, onDislke, isFilterMovies, setFilterMovies, setSearchValueMovies, searchValueMovies, isMoviesApiError, getCards } = props;
+    const { cards, isLoading, isEmptySearch, onLike, onDislike, isFilterMovies, setFilterMovies, setSearchValueMovies, searchValueMovies, isMoviesApiError, getCards, userCardsArray } = props;
     return (
         <>
             <SearchForm
@@ -19,8 +19,9 @@ function Movies(props) {
                 isLoading={isLoading}
                 isEmptySearch={isEmptySearch}
                 onLike={onLike}
-                onDislke={onDislke}
+                onDislike={onDislike}
                 isMoviesApiError={isMoviesApiError}
+                userCardsArray={userCardsArray}
             />
         </>
     );

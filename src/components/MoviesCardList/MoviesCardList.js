@@ -4,7 +4,7 @@ import Preloader from "../Preloader/Preloader"
 
 function MoviesCardList(props) {
 
-    const { cards, isLoading, isEmptySearch, onLike, onDislke, userCardsArray, isSavedCard, isMoviesApiError } = props;
+    const { cards, isLoading, isEmptySearch, onLike, onDislike, userCardsArray, isSavedCard, isMoviesApiError, onDelete } = props;
 
     const [windowSize, setWindowSize] = React.useState(document.documentElement.scrollWidth);
     const [cardsToRender, setCardsToRender] = React.useState([]);
@@ -60,7 +60,8 @@ function MoviesCardList(props) {
                 onLike={onLike}
                 isLikedStatus={isLikedStatus}
                 userCardIdLiked={userCardIdLiked}
-                onDislke={onDislke}
+                onDislike={onDislike}
+                onDelete={onDelete}
             />
         );
     });
