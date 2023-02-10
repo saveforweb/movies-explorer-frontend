@@ -2,16 +2,18 @@ import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
 function SavedMovies(props) {
-    const { cards, onSearch, isLoading, isEmptySearch, onDelete, onFilter } = props;
+    const { cards, isLoading, isEmptySearch, isFilterSavedMovies, setFilterSavedMovies, setSearchValueSavedMovies, searchValueSavedMovies, onDelete } = props;
     const isSavedCard = true;
 
     return (
         <>
             <SearchForm
-                onSearch={onSearch}
-                typeSearch='savedMoviesSearch'
-                typeSearchFilter="savedMoviesFilter"
-                onFilter={onFilter}
+                typeSearch='searchValueSavedMovies'
+                typeSearchFilter="isFilterSavedMovies"
+                isFilterMovies={isFilterSavedMovies}
+                setFilterMovies={setFilterSavedMovies}
+                setSearchValueMovies={setSearchValueSavedMovies}
+                searchValueMovies={searchValueSavedMovies}
             />
             <MoviesCardList
                 isSavedCard={isSavedCard}

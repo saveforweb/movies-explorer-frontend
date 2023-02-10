@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import MoviesCard from "../MoviesCard/MoviesCard";
 import Preloader from "../Preloader/Preloader"
 
 function MoviesCardList(props) {
 
-    const { isSavedCard, cards, isLoading, isEmptySearch, isMoviesApiError, onClickLike, userCardsArray, onClickDislike, onDelete } = props;
+    const { cards, isLoading, isEmptySearch, onLike, onDislike, userCardsArray, isSavedCard, isMoviesApiError, onDelete } = props;
 
     const [windowSize, setWindowSize] = React.useState(document.documentElement.scrollWidth);
     const [cardsToRender, setCardsToRender] = React.useState([]);
@@ -27,11 +27,11 @@ function MoviesCardList(props) {
         setCardsOptionsByWindowsSize(windowSize);
     }
 
-    useEffect(() => {
+    React.useEffect(() => {
         setCardsOptionsByWindowsSize(windowSize);
     }, [])
 
-    useEffect(() => {
+    React.useEffect(() => {
         setCardsToRender(cards?.slice(0, cardsOptions.render));
         window.addEventListener('resize', handeResize);
         return () => {
@@ -43,9 +43,9 @@ function MoviesCardList(props) {
         let isLikedStatus = false;
         let userCardIdLiked = '';
 
-        if(userCardsArray){
+        if (userCardsArray) {
             for (let i = 0; i < userCardsArray.length; i++) {
-                if (card.id === Number(userCardsArray[i].movieId)) {   
+                if (card.id === Number(userCardsArray[i].movieId)) {
                     isLikedStatus = true;
                     userCardIdLiked = userCardsArray[i]._id;
                 }
@@ -57,10 +57,10 @@ function MoviesCardList(props) {
                 isSavedCard={isSavedCard}
                 card={card}
                 key={card.id || card._id}
-                onClickLike={onClickLike}
+                onLike={onLike}
                 isLikedStatus={isLikedStatus}
                 userCardIdLiked={userCardIdLiked}
-                onClickDislike={onClickDislike}
+                onDislike={onDislike}
                 onDelete={onDelete}
             />
         );

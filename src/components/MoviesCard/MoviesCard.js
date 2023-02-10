@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 
 function MoviesCard(props) {
-    const { isSavedCard, card, onClickLike, onClickDislike, isLikedStatus, userCardIdLiked, onDelete } = props;
+    const { isSavedCard, card, onLike, onDislike, isLikedStatus, userCardIdLiked, onDelete } = props;
 
     const [isLiked, toggleLike] = useState(false);
 
     function handlerClickLikeButton() {
         if (isLiked === false) {
-            onClickLike(card);
+            onLike(card);
             toggleLike(!isLiked);
         } else {
-            onClickDislike(userCardIdLiked);
+            onDislike(userCardIdLiked);
             toggleLike(!isLiked);
         }
     }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes, useNavigate, Navigate } from 'react-router-dom';
+import { Route, Routes, useNavigate, Navigate, useLocation } from 'react-router-dom';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Movies from "../Movies/Movies";
@@ -9,136 +9,47 @@ import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
-import MoviesApi from '../../utils/MoviesApi';
 import MainApi from '../../utils/MainApi';
 import { ProtectedRoute } from '../ProtectedRoute/ProtectedRoute';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { mainApiConfig } from '../../utils/config';
 import { ProtectedRouteAfterLogin } from '../ProtectedRouteAfterLogin/ProtectedRouteAfterLogin';
+import StorageService from '../../utils/storageService/storageService';
+import useMovies from '../../contexts/hooks/useMovies';
+import useSavedMovies from '../../contexts/hooks/useSavedMovies';
 
 function App() {
   const navigate = useNavigate();
-  const [cardsArray, setCardsArray] = React.useState([]);
-  const [isLoading, setLoading] = React.useState(false);
-  const [isEmptySearch, setEmptySearch] = React.useState(false);
-  const [isMoviesApiError, setIsMoviesApiError] = React.useState(false);
+  const location = useLocation();
+
+  const [loggedIn, setLoggedIn] = React.useState(!!StorageService.get('loggedIn'));
+  const [currentUser, setCurrentUser] = React.useState({});
+
   const [registrationError, setRegistrationError] = React.useState('');
   const [loginError, setLoginError] = React.useState('');
   const [editUserError, setEditUserError] = React.useState('');
-  const [currentUser, setCurrentUser] = React.useState({});
-  const [loggedIn, setLoggedIn] = React.useState(localStorage.getItem('loggedIn') && localStorage.getItem('loggedIn') === 'true');
-  const [userCardsArray, setUserCardsArray] = React.useState([]);
-  const [isMoviesFilterOn, setIsMoviesFilterOn] = React.useState(localStorage.getItem('moviesFilter') && localStorage.getItem('moviesFilter') === 'true');
-  const [isSavedMoviesFilterOn, setIsSavedMoviesFilterOn] = React.useState(localStorage.getItem('savedMoviesFilter') && localStorage.getItem('savedMoviesFilter' === 'true'));
-  const [searchValue, setSearchValue] = React.useState(localStorage.getItem('moviesSearch'));
-  const [savedMoviesSearch, setSavedMoviesSearch] = React.useState(localStorage.getItem('savedMoviesSearch') || '');
 
-  const token = localStorage.getItem('jwt');
+  const [isLoading, setLoading] = React.useState(false);
+
+  const [isFilterMovies, setFilterMovies] = React.useState(!!StorageService.get('isFilterMovies'));
+  const [searchValueMovies, setSearchValueMovies] = React.useState(typeof StorageService.get('searchValueMovies') === 'string' ? StorageService.get('searchValueMovies') : '');
+
+  const [isFilterSavedMovies, setFilterSavedMovies] = React.useState(false);
+  const [searchValueSavedMovies, setSearchValueSavedMovies] = React.useState('');
+
+  const token = StorageService.get('jwt');
   const mainApi = new MainApi({ ...mainApiConfig, token });
 
-  React.useEffect(() => {
-    localStorage.setItem('loggedIn', loggedIn)
-  }, [loggedIn]);
+  const [cardsForRender, isMoviesApiError, isEmptySearch, getCards] = useMovies(searchValueMovies, isFilterMovies, loggedIn, setLoading);
+  const [savedCardsForRender, isSavedMoviesApiError, isSavedEmptySearch, setSavedCards] = useSavedMovies(searchValueSavedMovies, isFilterSavedMovies, loggedIn);
 
-  React.useEffect(() => {
-    if (token) {
-      mainApi.checkToken(token)
-        .then(({ data }) => {
-          setLoggedIn(true);
-          setCurrentUser(data);
-        })
-        .catch((result) => {
-          console.log(result);
-        })
-    } else {
-      setLoggedIn(false);
-    }
+  const [tokenState, setTokenState] = React.useState('');
 
-    if (loggedIn && !localStorage.getItem('savedMoviesSearch')) {
-      getUserCards();
-    }
-
-  }, [loggedIn]);
-
-  function filterInCards(searchResult) {
-    return searchResult?.filter(item => item.duration <= 40);
-  }
-
-  function searchInLocalCards(searchValue) {
-    setSearchValue(searchValue);
-    let searchResult = JSON.parse(localStorage.getItem('moviesCards'))?.filter(item => item.nameRU.toUpperCase().includes(searchValue.toUpperCase()));
-
-    if (isMoviesFilterOn) {
-      searchResult = filterInCards(searchResult);
-    }
-
-    setCardsArray(searchResult);
-
-    if (searchResult.length === 0) {
-      setEmptySearch(true);
-    } else {
-      setEmptySearch(false);
-    }
-  }
-
-  React.useEffect(() => {
-    if (loggedIn) {
-      searchInLocalCards(searchValue);
-    }
-  }, [isMoviesFilterOn]);
-
-  function handleClickSearchSavedMoviesButton(savedMoviesSearch) {
-    setLoading(true);
-
-    if (JSON.parse(localStorage.getItem('savedMoviesCards'))) {
-      searchInSavedCards(savedMoviesSearch);
-      setLoading(false);
-    } else {
-      mainApi.getUserCards()
-        .then(({ data }) => {
-          setIsMoviesApiError(false);
-          localStorage.setItem('savedMoviesCards', JSON.stringify(data))
-          searchInSavedCards(savedMoviesSearch);
-        })
-        .catch((result) => {
-          console.log(result);
-          setIsMoviesApiError(true);
-        })
-        .finally(() => {
-          setLoading(false);
-        })
-    }
-  }
-
-  function searchInSavedCards(savedMoviesSearch) {
-
-    let searchResult = JSON.parse(localStorage.getItem('savedMoviesCards'))?.filter(item => item.nameRU.toUpperCase().includes(savedMoviesSearch.toUpperCase()));
-
-    if (isSavedMoviesFilterOn) {
-      searchResult = filterInCards(searchResult);
-    }
-
-    setUserCardsArray(searchResult);
-
-    if (searchResult.length === 0) {
-      setEmptySearch(true);
-    } else {
-      setEmptySearch(false);
-    }
-  }
-
-  React.useEffect(() => {
-    if (loggedIn) {
-      searchInSavedCards(savedMoviesSearch);
-    }
-  }, [isSavedMoviesFilterOn]);
-
-  function handleClickRegistrationButton(registrationValues) {
-    const { name, email, password } = registrationValues;
+  function registration({ name, email, password }) {
     mainApi.signUp(name.value, email.value, password.value)
       .then((result) => {
         if (result) {
-          handleClickLoginButton({ email, password })
+          login({ email, password })
         }
       })
       .catch((err) => {
@@ -146,13 +57,12 @@ function App() {
       });
   }
 
-  function handleClickLoginButton(loginValues) {
-    const { email, password } = loginValues;
+  function login({ email, password }) {
     mainApi.signIn(email.value, password.value)
       .then((result) => {
         if (result.token) {
           setLoggedIn(true);
-          localStorage.setItem("jwt", result.token);
+          StorageService.save("jwt", result.token);
           navigate('/movies');
         }
       })
@@ -161,33 +71,10 @@ function App() {
       });
   }
 
-  function handleClickSearchMoviesButton(searchValue) {
-    setLoading(true);
-
-    if (JSON.parse(localStorage.getItem('moviesCards'))) {
-      searchInLocalCards(searchValue);
-      setLoading(false);
-    } else {
-      MoviesApi.getCards()
-        .then((result) => {
-          setIsMoviesApiError(false);
-          localStorage.setItem('moviesCards', JSON.stringify(result))
-          searchInLocalCards(searchValue);
-        })
-        .catch((result) => {
-          console.log(result);
-          setIsMoviesApiError(true);
-        })
-        .finally(() => {
-          setLoading(false);
-        })
-    }
-  }
-
-  function handleClickEditUserButton(userValue) {
-    const { name, email } = userValue;
+  function editUser({ name, email }) {
     mainApi.updateUserInfo(name.value, email.value)
-      .then((result) => {
+      .then(({ data }) => {
+        setCurrentUser(data);
         setEditUserError('Данные успешно обновлены');
       })
       .catch((err) => {
@@ -195,52 +82,72 @@ function App() {
       });
   }
 
-  function getUserCards() {
-    mainApi.getUserCards()
-      .then(({ data }) => {
-        localStorage.setItem('savedMoviesCards', JSON.stringify(data))
-        setUserCardsArray(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  function handleClickLogoutLink() {
-    localStorage.clear();
+  function logout() {
+    StorageService.clear();
     navigate("/");
     setLoggedIn(false);
   }
 
-  function handleClickAddMoviesButton(card) {
+  function likeUserMovie(card) {
     mainApi.createUserCard(card)
-      .then((result) => {
-        getUserCards();
-      })
-      .catch((err) => {
-        setEditUserError(err);
-      });
-  }
-
-  function handleClickDislike(cardId) {
-    mainApi.deleteUserCard(cardId)
-      .then((result) => {
-        getUserCards();
+      .then(({data}) => {
+        const cardsAfterAdd = StorageService.get('cardsSavedMovies');
+        cardsAfterAdd.push(data);
+        StorageService.save('cardsSavedMovies', cardsAfterAdd);
+        setSavedCards(cardsAfterAdd);
       })
       .catch((err) => {
         console.log(err);
       });
   }
 
-  function handleClickDeleteSavedButton(cardId) {
+  function dislikeUserMovie(cardId) {
     mainApi.deleteUserCard(cardId)
       .then((result) => {
-        getUserCards();
+        const cardsAfterDelete = StorageService.get('cardsSavedMovies')?.filter(item => item._id !== cardId);
+        StorageService.save('cardsSavedMovies', cardsAfterDelete);
+        setSavedCards(cardsAfterDelete);
       })
       .catch((err) => {
         console.log(err);
       });
   }
+
+  function deleteUserMovie(cardId) {
+    mainApi.deleteUserCard(cardId)
+      .then((result) => {
+        const cardsAfterDelete = StorageService.get('cardsSavedMovies')?.filter(item => item._id !== cardId);
+        StorageService.save('cardsSavedMovies', cardsAfterDelete);
+        setSavedCards(cardsAfterDelete);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  React.useEffect(() => {
+    if (token) {
+      if (token !== tokenState) {
+        mainApi.checkToken(token)
+          .then(({ data }) => {
+            setLoggedIn(true);
+            setCurrentUser(data);
+            StorageService.save('loggedIn', true);
+            setTokenState(token);
+          })
+          .catch((err) => {
+            console.log(err);
+            logout();
+            setLoggedIn(false);
+            StorageService.save('loggedIn', false);
+          })
+      }
+    } else {
+      setLoggedIn(false);
+      StorageService.save('loggedIn', false);
+    }
+    setSearchValueSavedMovies('');
+  }, [loggedIn, location]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -257,15 +164,18 @@ function App() {
             <ProtectedRoute loggedIn={loggedIn}>
               <Header loggedIn={loggedIn} />
               <Movies
-                cards={cardsArray}
+                cards={cardsForRender}
+                userCardsArray={savedCardsForRender}
                 isEmptySearch={isEmptySearch}
                 isLoading={isLoading}
-                onSearch={handleClickSearchMoviesButton}
+                onLike={likeUserMovie}
+                onDislike={dislikeUserMovie}
+                isFilterMovies={isFilterMovies}
+                setFilterMovies={setFilterMovies}
+                setSearchValueMovies={setSearchValueMovies}
+                searchValueMovies={searchValueMovies}
                 isMoviesApiError={isMoviesApiError}
-                onClickLike={handleClickAddMoviesButton}
-                userCardsArray={userCardsArray}
-                onClickDislike={handleClickDislike}
-                onFilter={setIsMoviesFilterOn}
+                getCards={getCards}
               />
               <Footer />
             </ProtectedRoute>
@@ -273,32 +183,41 @@ function App() {
           <Route path="/profile" element={
             <ProtectedRoute loggedIn={loggedIn}>
               <Header loggedIn={loggedIn} />
-              <Profile onLogout={handleClickLogoutLink} onEditUser={handleClickEditUserButton} editUserError={editUserError} setEditUserError={setEditUserError} />
+              <Profile onLogout={logout} editUser={editUser} editUserError={editUserError} setEditUserError={setEditUserError} />
             </ProtectedRoute>
           } />
           <Route path="/saved-movies" element={
             <ProtectedRoute loggedIn={loggedIn}>
               <Header loggedIn={loggedIn} />
               <SavedMovies
-                cards={userCardsArray}
-                isEmptySearch={isEmptySearch}
+                cards={savedCardsForRender}
+                isEmptySearch={isSavedEmptySearch}
+                isMoviesApiError={isSavedMoviesApiError}
                 isLoading={isLoading}
-                onSearch={handleClickSearchSavedMoviesButton}
-                onDelete={handleClickDeleteSavedButton}
-                onFilter={setIsSavedMoviesFilterOn}
+                onDelete={deleteUserMovie}
+                isFilterSavedMovies={isFilterSavedMovies}
+                setFilterSavedMovies={setFilterSavedMovies}
+                setSearchValueSavedMovies={setSearchValueSavedMovies}
+                searchValueSavedMovies={searchValueSavedMovies}
               />
               <Footer />
             </ProtectedRoute>
           } />
-
           <Route path="/signup" element={
             <ProtectedRouteAfterLogin loggedIn={loggedIn}>
-              <Register onRegistration={handleClickRegistrationButton} registrationError={registrationError} setRegistrationError={setRegistrationError} />
+              <Register
+                onRegistration={registration}
+                registrationError={registrationError}
+                setRegistrationError={setRegistrationError} />
             </ProtectedRouteAfterLogin>
           } />
           <Route path="/signin" element={
             <ProtectedRouteAfterLogin loggedIn={loggedIn}>
-              <Login onLogin={handleClickLoginButton} loginError={loginError} setLoginError={setLoginError} />
+              <Login
+                onLogin={login}
+                loginError={loginError}
+                setLoginError={setLoginError}
+              />
             </ProtectedRouteAfterLogin>
           } />
           <Route path="/404" element={

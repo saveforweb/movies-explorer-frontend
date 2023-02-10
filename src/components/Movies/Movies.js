@@ -2,23 +2,26 @@ import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
 function Movies(props) {
-    const { cards, onSearch, isLoading, isEmptySearch, isMoviesApiError, onClickLike, userCardsArray, onClickDislike, onFilter } = props;
+    const { cards, isLoading, isEmptySearch, onLike, onDislike, isFilterMovies, setFilterMovies, setSearchValueMovies, searchValueMovies, isMoviesApiError, getCards, userCardsArray } = props;
     return (
         <>
             <SearchForm
-                onSearch={onSearch}
-                typeSearch='moviesSearch'
-                typeSearchFilter="moviesFilter"
-                onFilter={onFilter}
+                typeSearch='searchValueMovies'
+                typeSearchFilter="isFilterMovies"
+                isFilterMovies={isFilterMovies}
+                setFilterMovies={setFilterMovies}
+                setSearchValueMovies={setSearchValueMovies}
+                searchValueMovies={searchValueMovies}
+                getCards={getCards}
             />
             <MoviesCardList
                 cards={cards}
                 isLoading={isLoading}
                 isEmptySearch={isEmptySearch}
+                onLike={onLike}
+                onDislike={onDislike}
                 isMoviesApiError={isMoviesApiError}
-                onClickLike={onClickLike}
                 userCardsArray={userCardsArray}
-                onClickDislike={onClickDislike}
             />
         </>
     );
