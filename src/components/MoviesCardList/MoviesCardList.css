@@ -39,6 +39,18 @@
   transition: 0.5s;
 }
 
+.movies__not-found {
+  font-family: var(
+    --font-family-default
+  );
+  font-weight: var(
+    --font-weight-medium
+  );
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--color-gray);
+}
+
 .movies__see-more-button:hover {
   opacity: 70%;
 }
@@ -72,7 +84,7 @@
   }
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 480px) {
   .movies__list {
     grid-template-columns: 1fr;
   }

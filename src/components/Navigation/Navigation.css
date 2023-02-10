@@ -266,5 +266,6 @@
 
   .navigation__mobile-menu-icon_active {
     right: 14px;
+    top: 15px;
   }
 }

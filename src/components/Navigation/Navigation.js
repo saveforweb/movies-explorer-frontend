@@ -7,7 +7,7 @@ function Navigation(props) {
 
     const [isMenuOpen, toggleMenu] = useState(false);
 
-    function handlerClickMenu() {
+    function handleClickMenu() {
         toggleMenu(!isMenuOpen);
     }
 
@@ -34,22 +34,22 @@ function Navigation(props) {
             {loggedIn ?
                 <>
                     <div className={overlayClassName} onClick={handleCLickOverlay}></div>
-                    <button className={menuButtonClassName} onClick={handlerClickMenu}></button>
+                    <button className={menuButtonClassName} onClick={handleClickMenu}></button>
                     <nav className={menuClassName}>
                         <ul className='navigation__user-block-list'>
                             <li className='navigation__user-block-list-item navigation__user-block-list-item_mobile'>
-                                <NavLink to="/" className='navigation__user-block-link' onClick={handlerClickMenu}>Главная</NavLink>
+                                <NavLink to="/" className='navigation__user-block-link' onClick={handleClickMenu}>Главная</NavLink>
                             </li>
                             <li className='navigation__user-block-list-item'>
-                                <NavLink to="/movies" className='navigation__user-block-link' onClick={handlerClickMenu}>Фильмы</NavLink>
+                                <NavLink to="/movies" className='navigation__user-block-link' onClick={handleClickMenu}>Фильмы</NavLink>
                             </li>
                             <li className='navigation__user-block-list-item'>
-                                <NavLink to="/saved-movies" className='navigation__user-block-link' onClick={handlerClickMenu}>Сохранённые фильмы</NavLink>
+                                <NavLink to="/saved-movies" className='navigation__user-block-link' onClick={handleClickMenu}>Сохранённые фильмы</NavLink>
                             </li>
                         </ul>
                         <ul className='navigation__user-block-list'>
                             <li className='navigation__user-block-list-item'>
-                                <NavLink to="/profile" className='navigation__user-block-account' onClick={handlerClickMenu}>Аккаунт</NavLink>
+                                <NavLink to="/profile" className='navigation__user-block-account' onClick={handleClickMenu}>Аккаунт</NavLink>
                             </li>
                         </ul>
                     </nav>
